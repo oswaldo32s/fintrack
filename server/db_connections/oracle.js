@@ -33,4 +33,14 @@ export class Oracle {
     const pool = Oracle.getPool();
     return await pool.getConnection();
   }
+
+  static async closeConnection(connection) {
+    if (connection) {
+      try {
+        await connection.close();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
 }

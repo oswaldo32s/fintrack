@@ -1,4 +1,9 @@
-export default class CategoryController {
+import {
+  validateCategory,
+  validatePartialCategory,
+} from "../schemas/categories.js";
+
+export class CategoryController {
   constructor({ categoryModel }) {
     this.categoryModel = categoryModel;
   }
@@ -23,7 +28,11 @@ export default class CategoryController {
     if (result.error)
       return res.status(400).json({ error: JSON.parse(result.error.message) });
 
-    const newCategory = await this.categoryModel({ input: result.data });
+    const newCategory = await this.categoryModel.create({ input: result.data });
+
+    if (newCategory.error)
+      return res.status(400).json({ error: newCategory.error });
+
     res.json(newCategory);
   };
 
@@ -39,8 +48,8 @@ export default class CategoryController {
       input: result.data,
     });
 
-    if (!updatedCategory)
-      return res.status(404).json({ message: "category ID not found" });
+    if (updatedCategory.error)
+      return res.status(404).json({ message: updatedCategory.error });
 
     res.json(updatedCategory);
   };
@@ -52,6 +61,6 @@ export default class CategoryController {
     if (!deletedCategory)
       return res.status(404).json({ message: "category id does not exist" });
 
-    res.json({ message: "deleted successfully" });
+    res.json(deletedCategory);
   };
 }

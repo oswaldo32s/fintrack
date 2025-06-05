@@ -1,35 +1,25 @@
+import oracledb from "oracledb";
 import { Oracle } from "../../db_connections/oracle.js";
-import { randomUUID } from "node:crypto";
 
 export class CategoryModel {
   static async getAll() {
     let connection;
     try {
       connection = await Oracle.getConnection();
-      const result = await connection.execute(`SELECT * FROM finance.category`);
-      const categories = result.rows.map(
-        ([id, name, description, createDatetime, updateDatetime]) => {
-          return {
-            id,
-            name,
-            description,
-            createDatetime,
-            updateDatetime,
-          };
-        }
+      const result = await connection.execute(
+        `SELECT * FROM finance.category ORDER BY ID`,
+        [],
+        { outFormat: oracledb.OUT_FORMAT_OBJECT }
       );
-      return categories;
+      return {
+        message: "categories retrived",
+        result: result.rows,
+      };
     } catch (error) {
-      console.log("ERROR: ", error);
+      console.error("ERROR: ", error);
       return { ERROR: "Failed to retrive categories" };
     } finally {
-      if (connection) {
-        try {
-          await connection.close();
-        } catch (err) {
-          console.error(err);
-        }
-      }
+      Oracle.closeConnection(connection);
     }
   }
 
@@ -42,55 +32,159 @@ export class CategoryModel {
         SELECT * 
         FROM finance.category
         WHERE id = :id`,
-        { id }
+        { id },
+        { outFormat: oracledb.OUT_FORMAT_OBJECT }
       );
-      console.log(result);
+      return {
+        message: "category retrived",
+        result: result.rows[0],
+      };
     } catch (error) {
       console.log("ERROR: ", error);
-      return { ERROR: "Failed to retrive categories" };
+      return false;
     } finally {
-      if (connection) {
-        try {
-          await connection.close();
-        } catch (err) {
-          console.error(err);
-        }
-      }
+      Oracle.closeConnection(connection);
     }
   }
 
   static async create({ input }) {
-    const newCategory = {
-      id: randomUUID(),
-      ...input,
-      createDatetime: new Date().toISOString(),
-    };
-    categories.push(newCategory);
+    let connection;
+    try {
+      connection = await Oracle.getConnection();
+      const categoryName = await connection.execute(
+        `SELECT * FROM finance.category WHERE LOWER(NAME) = :name`,
+        {
+          name: input.name.toLowerCase(),
+        }
+      );
 
-    return newCategory;
+      if (categoryName.rows.length != 0)
+        return { error: "A category with that name already exists" };
+
+      const insertResult = await connection.execute(
+        `
+        INSERT INTO finance.category (
+          NAME,
+          DESCRIPTION
+        ) VALUES (
+          :name,
+          :description 
+        ) RETURNING
+          ID,
+          CREATEDATETIME 
+        INTO
+          :id,
+          :createDatetime 
+        `,
+        {
+          id: { type: oracledb.NUMBER, dir: oracledb.BIND_OUT },
+          name: input.name,
+          description: input.description,
+          createDatetime: { type: oracledb.DATE, dir: oracledb.BIND_OUT },
+        },
+        {
+          autoCommit: true,
+        }
+      );
+
+      const id = insertResult.outBinds.id[0];
+
+      return {
+        message: "category created",
+        result: (await CategoryModel.getById({ id })).result,
+      };
+    } catch (error) {
+      console.log(error);
+    } finally {
+      Oracle.closeConnection(connection);
+    }
   }
 
   static async update({ id, input }) {
-    const categoryIndex = categories.findIndex((category) => category.id == id);
+    let connection;
+    try {
+      connection = await Oracle.getConnection();
+      const fields = [];
+      const binds = {
+        id,
+        updateDatetime: { type: oracledb.DATE, dir: oracledb.BIND_OUT },
+      };
 
-    if (categoryIndex === -1) return false;
+      const categoryName = await connection.execute(
+        `SELECT * FROM finance.category WHERE LOWER(NAME) = :name`,
+        {
+          name: input.name.toLowerCase(),
+        }
+      );
 
-    const updatedCategory = {
-      ...categories[categoryIndex],
-      ...input,
-      updateDatetime: new Date().toISOString(),
-    };
+      if (categoryName.rows.length != 0)
+        return { error: "A category with that name already exists" };
 
-    categories[categoryIndex] = updatedCategory;
+      if (input.name) {
+        fields.push("NAME = :name");
+        binds.name = input.name;
+      }
+
+      if (input.description) {
+        fields.push("DESCRIPTION = :description");
+        binds.description = input.description;
+      }
+
+      if (fields.length === 0) return { error: "No values to update" };
+
+      const sql = `
+        UPDATE finance.category
+        SET ${fields.join(", ")}
+        , UPDATEDATETIME = CURRENT_TIMESTAMP  
+        WHERE ID = :id
+        RETURNING
+          UPDATEDATETIME
+        INTO
+          :updateDatetime
+      `;
+
+      const result = await connection.execute(sql, binds, { autoCommit: true });
+      const newValue = await connection.execute(
+        "SELECT * FROM finance.category WHERE ID = :id",
+        { id },
+        { outFormat: oracledb.OUT_FORMAT_OBJECT }
+      );
+
+      return {
+        message: "category updated",
+        result: newValue.rows,
+      };
+    } catch (error) {
+      console.log(error);
+    } finally {
+      Oracle.closeConnection(connection);
+    }
   }
 
   static async delete({ id }) {
-    const categoryIndex = categories.findIndex((category) => category.id == id);
+    let connection;
+    try {
+      connection = await Oracle.getConnection();
+      const deletedItem = await connection.execute(
+        `SELECT * FROM finance.category WHERE ID = :id`,
+        { id },
+        { outFormat: oracledb.OUT_FORMAT_OBJECT }
+      );
+      if (deletedItem.rows.length == 0) return false;
 
-    if (categoryIndex === -1) return false;
+      const deleteItem = await connection.execute(
+        `DELETE FROM finance.category WHERE ID = :id`,
+        { id },
+        { autoCommit: true }
+      );
 
-    categories.splice(categoryIndex, 1);
-
-    return true;
+      return {
+        message: "category deleted",
+        result: deletedItem.rows[0],
+      };
+    } catch (error) {
+    } finally {
+      Oracle.closeConnection(connection);
+    }
   }
 }
