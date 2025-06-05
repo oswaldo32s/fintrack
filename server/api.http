@@ -1,0 +1,22 @@
+### GET All Categories
+GET http://localhost:3200/categories
+
+### GET Category by ID
+GET http://localhost:3200/categories/3d954611-df0c-4423-9e9e-fda39f26dc40
+
+### POST Create a new Category
+POST http://localhost:3200/categories
+Content-Type: application/json
+
+{
+  "name": "Business",
+  "description": "All expenses that goes to the business"
+}
+
+### Partial update of movie
+PATCH  http://localhost:3200/categories/1a8d47fa-b678-4e6a-b71d-5a6ec7c029b4
+Content-Type: application/json
+
+{
+  "description": "This is not a business category"
+}

@@ -1,0 +1,27 @@
+{
+  "name": "fintrack-server",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --watch --env-file .env index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oswaldo32s/fintrack.git"
+  },
+  "author": "Oswaldo Gonzalez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oswaldo32s/fintrack/issues"
+  },
+  "homepage": "https://github.com/oswaldo32s/fintrack#readme",
+  "description": "",
+  "dependencies": {
+    "cors": "2.8.5",
+    "express": "5.1.0",
+    "oracledb": "6.8.0",
+    "zod": "3.25.50"
+  }
+}

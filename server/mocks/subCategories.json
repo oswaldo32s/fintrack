@@ -1,0 +1,92 @@
+[
+  {
+    "id": "b012d8f6-9c98-4de0-9fae-b21e15c03cc3",
+    "name": "Supermarkets",
+    "description": "Groceries from large retail chains",
+    "categoryId": "1a8d47fa-b678-4e6a-b71d-5a6ec7c029b4",
+    "categoryName": "Groceries",
+    "createDatetime": "2025-06-04T10:05:00Z",
+    "updateDatetime": null
+  },
+  {
+    "id": "4020a1d0-d8d6-4f1b-81a4-e67a86bbd156",
+    "name": "Farmers Market",
+    "description": "Local produce and specialty foods",
+    "categoryId": "1a8d47fa-b678-4e6a-b71d-5a6ec7c029b4",
+    "categoryName": "Groceries",
+    "createDatetime": "2025-06-04T10:05:00Z",
+    "updateDatetime": null
+  },
+  {
+    "id": "eab347ff-7348-47f2-950c-006a3783e5c7",
+    "name": "Apartment Rent",
+    "description": "Primary residence monthly rent",
+    "categoryId": "97c9e25a-2b15-4d4d-9b77-75d69e9085d4",
+    "categoryName": "Rent",
+    "createDatetime": "2025-06-04T10:05:00Z",
+    "updateDatetime": null
+  },
+  {
+    "id": "d9d69391-39ae-4a6f-aee2-f548c2c55888",
+    "name": "Internet",
+    "description": "Home broadband or fiber connection",
+    "categoryId": "39b4a3e7-0e0b-43cf-9409-e2535ed36dbf",
+    "categoryName": "Utilities",
+    "createDatetime": "2025-06-04T10:05:00Z",
+    "updateDatetime": null
+  },
+  {
+    "id": "0f2e3193-7aef-4ff3-9f3b-5ac5e03ef347",
+    "name": "Electricity",
+    "description": "Monthly electric bill",
+    "categoryId": "39b4a3e7-0e0b-43cf-9409-e2535ed36dbf",
+    "categoryName": "Utilities",
+    "createDatetime": "2025-06-04T10:05:00Z",
+    "updateDatetime": null
+  },
+  {
+    "id": "0a08a8ae-bb58-4b44-beb3-cb1cdd22c1b6",
+    "name": "Public Transport",
+    "description": "Bus, train, or metro fares",
+    "categoryId": "4a5e894e-cb91-4230-a1b0-7f16ef4aa370",
+    "categoryName": "Transportation",
+    "createDatetime": "2025-06-04T10:05:00Z",
+    "updateDatetime": null
+  },
+  {
+    "id": "cdb57658-fb3d-4de2-875f-3e1a4ad2a239",
+    "name": "Fuel",
+    "description": "Gasoline or diesel expenses",
+    "categoryId": "4a5e894e-cb91-4230-a1b0-7f16ef4aa370",
+    "categoryName": "Transportation",
+    "createDatetime": "2025-06-04T10:05:00Z",
+    "updateDatetime": null
+  },
+  {
+    "id": "12f91be4-3e53-42cb-bc7f-5300ab7acb13",
+    "name": "Fast Food",
+    "description": "Quick-service restaurants",
+    "categoryId": "24d57eaa-e507-4b59-bd10-f94d5bc77c6a",
+    "categoryName": "Dining Out",
+    "createDatetime": "2025-06-04T10:05:00Z",
+    "updateDatetime": null
+  },
+  {
+    "id": "9ccf50bb-65e7-4c90-9725-b82f99e0ef89",
+    "name": "Streaming Services",
+    "description": "Netflix, Spotify, etc.",
+    "categoryId": "d8c278d0-ec1a-4057-a9e0-57ec3272e297",
+    "categoryName": "Entertainment",
+    "createDatetime": "2025-06-04T10:05:00Z",
+    "updateDatetime": null
+  },
+  {
+    "id": "f5bba0a3-3b25-4710-8f39-40a2ab3e79f9",
+    "name": "Online Courses",
+    "description": "Udemy, Coursera, etc.",
+    "categoryId": "53e3a77f-61ed-4d0e-b7ed-44ef69d8bc4e",
+    "categoryName": "Education",
+    "createDatetime": "2025-06-04T10:05:00Z",
+    "updateDatetime": null
+  }
+]

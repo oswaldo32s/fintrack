@@ -1,0 +1,72 @@
+[
+  {
+    "id": "1a8d47fa-b678-4e6a-b71d-5a6ec7c029b4",
+    "name": "Groceries",
+    "description": "Everyday food and household items",
+    "createDatetime": "2025-06-04T10:00:00Z",
+    "updateDatetime": null
+  },
+  {
+    "id": "97c9e25a-2b15-4d4d-9b77-75d69e9085d4",
+    "name": "Rent",
+    "description": "Monthly housing rental costs",
+    "createDatetime": "2025-06-04T10:00:00Z",
+    "updateDatetime": null
+  },
+  {
+    "id": "39b4a3e7-0e0b-43cf-9409-e2535ed36dbf",
+    "name": "Utilities",
+    "description": "Bills for essential services",
+    "createDatetime": "2025-06-04T10:00:00Z",
+    "updateDatetime": null
+  },
+  {
+    "id": "4a5e894e-cb91-4230-a1b0-7f16ef4aa370",
+    "name": "Transportation",
+    "description": "Costs related to commuting or travel",
+    "createDatetime": "2025-06-04T10:00:00Z",
+    "updateDatetime": null
+  },
+  {
+    "id": "24d57eaa-e507-4b59-bd10-f94d5bc77c6a",
+    "name": "Dining Out",
+    "description": "Meals and snacks purchased outside",
+    "createDatetime": "2025-06-04T10:00:00Z",
+    "updateDatetime": null
+  },
+  {
+    "id": "fe742bfc-9d8f-4b0d-b68f-420e5d9a1dc3",
+    "name": "Healthcare",
+    "description": "Medical and wellness expenses",
+    "createDatetime": "2025-06-04T10:00:00Z",
+    "updateDatetime": null
+  },
+  {
+    "id": "d8c278d0-ec1a-4057-a9e0-57ec3272e297",
+    "name": "Entertainment",
+    "description": "Leisure and fun activities",
+    "createDatetime": "2025-06-04T10:00:00Z",
+    "updateDatetime": null
+  },
+  {
+    "id": "53e3a77f-61ed-4d0e-b7ed-44ef69d8bc4e",
+    "name": "Education",
+    "description": "Learning and self-improvement costs",
+    "createDatetime": "2025-06-04T10:00:00Z",
+    "updateDatetime": null
+  },
+  {
+    "id": "9f320af5-7dcb-4a9c-97ed-e5dc1472d4cb",
+    "name": "Shopping",
+    "description": "Clothes and non-essential purchases",
+    "createDatetime": "2025-06-04T10:00:00Z",
+    "updateDatetime": null
+  },
+  {
+    "id": "6edc3a3d-654a-4e3e-9010-2c54b83b55c6",
+    "name": "Savings",
+    "description": "Money set aside for future use",
+    "createDatetime": "2025-06-04T10:00:00Z",
+    "updateDatetime": null
+  }
+]
