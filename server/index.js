@@ -4,7 +4,7 @@ import { CategoryModel } from "./models/AutonomousDB/category.js";
 
 const main = async () => {
   await Oracle.init();
-  createApp({ categoryModel: CategoryModel, db: Oracle });
+  createApp({ categoryModel: CategoryModel});
 };
 
 main().catch((err) => {

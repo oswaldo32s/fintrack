@@ -5,7 +5,7 @@ export class Oracle {
 
   static async init() {
     oracledb.initOracleClient({
-      libDir: "/opt/oracle/instantclient_23_8",
+	    libDir: process.env.RUN_TYPE == "server" ? "/usr/lib/oracle/23/client64/lib" : "/opt/oracle/instantclient_23_8"
     });
 
     if (!this.#pool) {

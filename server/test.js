@@ -1,49 +1,32 @@
-// Optional: explicitly specify the Instant Client directory (Thick mode)
 import oracledb from "oracledb";
 
-oracledb.initOracleClient({ libDir: "/opt/oracle/instantclient_23_8" });
+console.log("OracleDB version:", oracledb.versionString);
 
-const config = {
-  user: process.env.ORACLE_USER_NAME,
-  password: process.env.ORACLE_USER_PASSWORD,
-  connectString: process.env.ORACLE_CONNECTION,
-  poolMin: 2,
-  poolMax: 10,
-  poolIncrement: 1,
+oracledb.initOracleClient({ libDir: "/usr/lib/oracle/23/client64/lib" });
+
+const oracle_config = {
+  user: "FINANCE",
+  password: "OG2157!listic.",
+  connectString: `fsweb_medium` // Must match an alias in tnsnames.ora
 };
 
-const pool = await oracledb.createPool(config);
-
 async function run() {
-  console.log("Starting connection test...");
+  console.log("🚀 Starting connection attempt...");
   let connection;
   try {
-    connection = await pool.getConnection();
-    const result = await connection.execute(`SELECT * FROM finance.category`);
-    const categories = result.rows.map(
-      ([id, name, description, createDatetime, updateDatetime]) => {
-        return {
-          id,
-          name,
-          description,
-          createDatetime,
-          updateDatetime,
-        };
-      }
-    );
-    console.log(categories);
+    connection = await oracledb.getConnection(oracle_config);
+    console.log("✅ Connected to DB!");
+
+    const result = await connection.execute('SELECT * FROM finance.category');
+    console.log("✅ Query successful!");
+    console.log(result);
+
+    await connection.close();
+    console.log("✅ Connection closed.");
   } catch (error) {
-    console.log("ERROR: ", error);
-    return { ERROR: "Failed to retrive categories" };
-  } finally {
-    if (connection) {
-      try {
-        await connection.close();
-      } catch (err) {
-        console.error(err);
-      }
-    }
+    console.error("❌ DB Connection Error:", error);
   }
 }
 
 run();
+
