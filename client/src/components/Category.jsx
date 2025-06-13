@@ -1,7 +1,13 @@
 import { createCategory } from "../services/categories";
 import { CategoryList } from "./CategoryList";
+import { useCategories } from "../hooks/useCategories";
+import { useId } from "react";
 
 export function CreateCategoryForm() {
+  const { appendCategory } = useCategories();
+  const categoryNameId = useId();
+  const categoryDescriptionId = useId();
+
   async function handleSubmit(e) {
     e.preventDefault();
 
@@ -9,6 +15,9 @@ export function CreateCategoryForm() {
     const formObject = Object.fromEntries(formData.entries());
 
     const response = await createCategory({ input: formObject });
+    appendCategory({ newCategory: response });
+
+    e.target.reset();
   }
 
   return (
@@ -17,12 +26,12 @@ export function CreateCategoryForm() {
       <form onSubmit={handleSubmit}>
         <h3>New Category</h3>
         <div>
-          <label htmlFor="">Category Name</label>
-          <input type="text" name="name" />
+          <label htmlFor={categoryNameId}>Category Name</label>
+          <input type="text" name="name" id={categoryNameId} />
         </div>
         <div>
-          <label htmlFor="">Category Description</label>
-          <input type="text" name="description" />
+          <label htmlFor={categoryDescriptionId}>Category Description</label>
+          <input type="text" name="description" id={categoryDescriptionId} />
         </div>
         <button>Create Category</button>
       </form>

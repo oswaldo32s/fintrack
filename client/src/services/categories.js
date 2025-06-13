@@ -1,4 +1,4 @@
-import { BACKEND_URL } from "../utils/utils";
+import { BACKEND_URL } from "../utils/secrets";
 
 export async function getCategories() {
   const response = await fetch(BACKEND_URL + "/categories");
@@ -9,7 +9,9 @@ export async function getCategories() {
     id: category.ID,
     name: category.NAME,
     description: category.DESCRIPTION,
-    createDateTime: new Date(category.CREATEDATETIME).toLocaleString(),
+    createDateTime: new Date(category.CREATEDATETIME).toLocaleString("en-US", {
+      timeZone: "America/Mexico_City",
+    }),
     updateDateTime: category.UPDATEDATETIME
       ? new Date(category.UPDATEDATETIME).toLocaleString()
       : "",
@@ -26,5 +28,18 @@ export async function createCategory({ input }) {
     body: JSON.stringify(input),
   });
 
-  return await response.json();
+  const { category } = await response.json();
+  const newCategory = {
+    id: category.ID,
+    name: category.NAME,
+    description: category.DESCRIPTION,
+    createDateTime: new Date(category.CREATEDATETIME).toLocaleString("en-US", {
+      timeZone: "America/Mexico_City",
+    }),
+    updateDateTime: category.UPDATEDATETIME
+      ? new Date(category.UPDATEDATETIME).toLocaleString()
+      : "",
+  };
+
+  return newCategory;
 }
